@@ -4,7 +4,8 @@ module.exports.register = async (req, res) => {
     const { email, name, lastName, password } = req.body;
 
     
-    try {
+    try 
+    {
         const foundUser = await User.findOne({ email: email });
         if (!foundUser) 
         {
@@ -24,7 +25,7 @@ module.exports.register = async (req, res) => {
         }
         else
         {
-            return res.status(409).json({message: 'User Already Registered'});
+            return res.status(409).json({message: 'User Already Registered Please Login'});
         }
     }
     catch (err) {

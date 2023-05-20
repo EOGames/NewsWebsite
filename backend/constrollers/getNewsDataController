@@ -1,0 +1,15 @@
+const news = require('../models/newsModel');
+
+module.exports.getNewsData = async(req,res)=>
+{
+    try 
+    {
+        let data = await news.find();
+        res.status(200).json(data);        
+    }
+     catch (error) 
+    {
+        return res.status(500).json({message:'Got Error While Fetching Data ',error:error});
+    }
+
+}

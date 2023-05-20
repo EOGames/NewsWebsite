@@ -60,6 +60,7 @@ code {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.721);
   font-size: 1rem;
   width: 20vw;
+  border: none;
   
 }
 
@@ -71,10 +72,12 @@ li a
   text-shadow: 1px 1px 5px black;
 }
 
+a{
+  text-decoration: none;
+}
 a:hover
 {
-  color: red;
-  font-size: 1.2em;
+  color: rgb(0, 119, 255);
 }
 
 .submit_btn
@@ -106,4 +109,57 @@ a:hover
   background-color: rgb(255, 249, 238);
   white-space:break-spaces;
   padding: .5rem;
+}
+
+button
+{
+  cursor: pointer;
+}
+
+.btn_right
+{
+  float: right;
+  margin-right: 2%;
+}
+
+.modal_holder
+{
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.886);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  
+}
+.modal
+{
+  background-color: #aeacac;
+  height: 80%;
+  width: 80%;
+  padding: 2% 4%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 10px solid rgb(144, 143, 143);
+  border-radius: 10px;
+}
+
+.img_modal
+{
+  width: 70%;
+  margin: 0 17%;
+  border-radius: 10px;
+}
+.subtitle_modal
+{
+  color: rgb(69, 69, 69);
+  /* margin-left:; */
+  text-align: justify;
+}
+.brief_news
+{
+  font-size: 1.4rem;
 }

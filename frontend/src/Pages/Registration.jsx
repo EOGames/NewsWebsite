@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import TickOrCross from '../components/TickOrCross';
+import { register } from '../api/register.api';
+import { NavLink, useNavigate } from "react-router-dom";
+
 
 function Registration() {
     const [password, setPassword] = useState('');
@@ -7,17 +10,23 @@ function Registration() {
     const [passValidation, setPassValidation] = useState([]);
     const [canFormSubmit, setCanFormSubmit] = useState(false);
 
+    const navigate = useNavigate();
+
+    const email = useRef('');
+    const name = useRef('');
+    const lastName = useRef('');
+
+
     const small_Regex = /[a-z]/;
     const capital_Regex = /[A-Z]/;
     const chqNumber = /\d/;
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
     const validInvalid = document.getElementById('validInvalid');
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (password === confirmPassword) 
-        {
+        if (password === confirmPassword) {
             validInvalid.innerHTML = 'LooksGood';
             validInvalid.style = 'color:green';
 
@@ -29,8 +38,27 @@ function Registration() {
 
         if (canFormSubmit) {
             //do stuff here
+
+            let registrationData = await register(email.current.value, name.current.value, lastName.current.value, password);
+            if (registrationData.status !== 200) {
+                validInvalid.innerHTML = registrationData.response.data.message;
+                validInvalid.style = 'color:red';
+            }
+            else
+            {
+                setTimeout(() => 
+                {                
+                  navigate('/');
+                }, 1500);
+                
+                validInvalid.innerHTML = 'Registration Success ! Please Login To Continue';
+                validInvalid.style = 'color:green';
+            }
+
+            console.log('registrationData:::::', registrationData);
         }
-        else {
+        else 
+        {
             console.error('Not Allowed To Submit');
         }
     }
@@ -94,13 +122,17 @@ function Registration() {
                 <h1 style={{ textAlign: 'center' }}>Sign Up</h1>
                 <div className='formHolder' onSubmit={handleSubmit}>
                     <form className='my_form' action="" method="post">
-                        <input required type="email" placeholder='Email' />
-                        <input required type="text" placeholder='Name' />
-                        <input required type="text" placeholder='LastName' />
+                        <input required type="email" placeholder='Email' ref={email} />
+                        <input required type="text" placeholder='Name' ref={name} />
+                        <input required type="text" placeholder='LastName' ref={lastName} />
                         <input onChange={(e) => handlePassword(e.target.value)} required type="text" placeholder='Password' />
                         <input onChange={(e) => setConfirmPassword(e.target.value)} required type="text" placeholder=' Confirm Password' />
                         <button className='submit_btn' type='submit'>Register</button>
                         <p id='validInvalid'></p>
+                        <pre>
+                            Already Registered..
+                            <NavLink to={'/login'}>Login</NavLink>
+                        </pre>
                     </form>
 
                     {
