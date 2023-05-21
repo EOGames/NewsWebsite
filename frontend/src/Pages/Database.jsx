@@ -86,7 +86,7 @@ const Database = () =>
 
             </div>
             {
-                handleModal ? <Modal closeModal ={closeModal} /> : null
+                handleModal ? <Modal  closeModal ={closeModal} /> : null
             }
         </div>
 

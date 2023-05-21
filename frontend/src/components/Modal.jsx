@@ -9,6 +9,7 @@ const Modal = ({closeModal}) => {
     })
     return (
         <div className="modal_holder">
+            {console.log('Modal called')}
             <button className="submit_btn" onClick={closeModal}>Close</button>
             <div className="modal">
                 <h1 style={{textAlign:'center',margin:'2% 5%'}} >{getNews[0].headLine}</h1>

@@ -6,12 +6,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
+  
 }
 
 *
 {
   box-sizing: border-box;
+
 }
+
+.App
+{
+  width: 100vw;
+  height: 100vh;
+}
+
+.title_h1{
+  padding: 0;
+  margin: 0;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -124,7 +138,7 @@ button
 
 .modal_holder
 {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.886);
   width: 100vw;
   height: 100vh;
@@ -162,4 +176,62 @@ button
 .brief_news
 {
   font-size: 1.4rem;
+}
+
+.title
+{
+  font-family: 'open sans','sans-serif';
+  font-size: 1.5rem;
+  background-color: #018dc5d3;
+  text-align: center;
+  color: #dddddd;
+  text-shadow: 5px 5px 10px rgb(10, 10, 10);
+  
+}
+
+.largeSlideHolder
+{
+  display: flex;
+  margin-left: 2%;
+  height: 40%;
+}
+
+.largeSlide
+{
+  width: 80%;
+  height: 100%;
+}
+
+.miniSlidesHolder
+{
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.miniSlide
+{
+  background-color: #008ec6;
+  width: 30vw;
+  height: 70vh;
+  margin: 1rem;
+  border: .4rem solid #3bc7ff;
+  box-shadow: 0rem 0rem .4rem .4rem #0383b6;
+  padding: .1rem .7rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mini_Slide_Pic
+{
+  width: 90%;
+  height: 50%;
+  margin: 0 5%;
+}
+
+.mini_slide_btn
+{
+  background-color: transparent;
+  border: none;
 }
