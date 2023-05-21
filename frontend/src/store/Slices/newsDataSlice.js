@@ -11,6 +11,11 @@ const newsDataSlice = createSlice({
                      
         },
 
+        resetNewsStateData(state,actions)
+        {
+            return [];
+        },
+
         getNewsData(state,actions)
         {
             return state;
@@ -18,4 +23,4 @@ const newsDataSlice = createSlice({
     }
 });
 export default newsDataSlice;
-export const {addNewsdata,getNewsData} = newsDataSlice.actions;
+export const {addNewsdata,resetNewsStateData,getNewsData} = newsDataSlice.actions;

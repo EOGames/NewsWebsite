@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addHomePageData,resetStateData } from '../store/Slices/homeSlice';
 import LargeSlide from '../components/LargeSlide';
 import MiniSlide from '../components/MiniSlide';
-import { addNewsdata } from '../store/Slices/newsDataSlice';
+import { addNewsdata, resetNewsStateData } from '../store/Slices/newsDataSlice';
 import Modal from '../components/Modal';
 
 
@@ -45,12 +45,13 @@ function Home() {
 
     const openModal = (id) => {
         console.log('active_id: For Modal', id);
+        dispatch(resetNewsStateData());
         dispatch(addNewsdata(getMiniSlideData[id]));
         setOpenModal(true);
     }
 
     return (
-        <div>
+        <>
             <div className='largeSlideHolder'>
                 <LargeSlide />
 
@@ -71,7 +72,7 @@ function Home() {
             {
                 handleModal ? <Modal closeModal={closeModal} /> : null
             }
-        </div>
+        </>
     )
 }
 

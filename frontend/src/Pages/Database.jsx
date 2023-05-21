@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getData } from "../api/getData.api";
 
 import { useDispatch } from "react-redux";
-import { addNewsdata } from "../store/Slices/newsDataSlice";
+import { addNewsdata, resetNewsStateData } from "../store/Slices/newsDataSlice";
 import { useEffect, useState } from "react";
 import  Modal from "../components/Modal";
 
@@ -43,36 +43,43 @@ const Database = () =>
     const openModal = (id) =>
     {
         console.log('id:',data[id]);
+        dispatch(resetNewsStateData());
          dispatch(addNewsdata(data[id]));
         setOpenModal(true);
     }
 
     return (
-        <div>
+        <div className="dataTableHolder">
             <button onClick={handleAddNews} className="submit_btn btn_right">AddNews</button>
             <div className="dataTable">
                 <Table>
-                    <TableHead>
+                    <TableHead >
                         <TableRow>
-                            <TableCell>HeadLine</TableCell>
-                            {/* <TableCell>Preview Pic</TableCell>
-                            <TableCell>SubTitle</TableCell> */}
-                            <TableCell>Sub Title</TableCell>
-                            <TableCell>Action</TableCell>
+                            <TableCell style={{borderTopLeftRadius:'7px'}} className="tableHead" >HeadLine</TableCell>
+                            <TableCell className="tableHead" >Preview Pic</TableCell>
+                            <TableCell className="tableHead" >SubTitle</TableCell>
+                            <TableCell className="tableHead" >Brief</TableCell>
+                            <TableCell style={{borderTopRightRadius:'7px'}} className="tableHead" >Action</TableCell>
                         </TableRow>
                     </TableHead>
 
-                    <TableBody>
+                    
+                    <TableBody >
                         {
                             data.length > 0 ?
                                 <>
                                     {data.map((n,id) =>
-                                        <TableRow key={'row_'+id}>
+                                        <TableRow style={{backgroundColor: id%2===0 ? 'grey' :'darkgrey'}} key={'row_'+id}>
                                             <TableCell>{n.headLine}</TableCell>
-                                            {/* <TableCell>{n.headLine}</TableCell>
-                                            <TableCell>{n.headLine}</TableCell> */}
+                                            <TableCell className="pic_overflowController" >{n.pic}</TableCell>
                                             <TableCell>{n.subTitle}</TableCell>
-                                            <TableCell><button onClick={()=> openModal(id)} className="submit_btn">View</button></TableCell>
+                                            <TableCell>{n.newsBrief}</TableCell>
+                                            <TableCell>
+                                                <button onClick={()=> openModal(id)} className="submit_btn">View</button>
+                                                <button onClick={()=> openModal(id)} className="submit_btn">Edit</button>
+
+                                                <button onClick={()=> openModal(id)} className="submit_btn">Delete</button>
+                                            </TableCell>
                                         </TableRow>
                                     )}
                                 </>

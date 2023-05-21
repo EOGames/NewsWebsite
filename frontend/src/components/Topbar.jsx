@@ -18,7 +18,7 @@ function Topbar() {
     return (
         <>
             <div className='title'>
-                <h1 className='title_h1'>The Faker News</h1>
+                <h1 className='title_h1'>Now Where News</h1>
                 <pre style={{margin:'0',padding:'1%'}} >ਝੂਠੀ ਖਬਰ | फर्जी खबर               
                 </pre>
             </div>

@@ -32,9 +32,27 @@ const AddNews = () => {
 
     }
 
-    const sendToDatabase = async () => {
+    const sendToDatabase = async () => 
+    {
+        ShowStatus(true);
         let resp = await saveToDatabase(headLine.current.value, pic, subTitle.current.value, newsInBrief.current.value);
         console.log('resp::::::: ', resp);
+        ShowStatus(false);
+    }
+
+    const ShowStatus =(bool) =>
+    {
+        const addNews_status = document.getElementById('addNews_status');
+        if (bool)
+        {
+            addNews_status.innerHTML = 'Saving...';
+            addNews_status.style = 'color:red';
+        }
+        else
+        {
+            addNews_status.innerHTML = 'Save Completed';
+            addNews_status.style = 'color:green';
+        }
     }
 
     return (
@@ -48,6 +66,7 @@ const AddNews = () => {
                 <input ref={subTitle} type="text" placeholder="SubTitle" />
                 <input ref={newsInBrief} type="text" placeholder="News In Brief" />
                 <button className="submit_btn" onClick={sendToDatabase}>Save</button>
+                <p id="addNews_status"></p>
             </div>
         </div>
     );
