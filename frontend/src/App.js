@@ -7,6 +7,7 @@ import PrivateComponent from "./components/PrivateComponent";
 import PrivateLoginSignUp from "./components/PrivateLoginSignUp";
 import Database from "./Pages/Database";
 import AddNews from "./Pages/AddNews";
+import EditNews from "./Pages/EditNews";
 
 function App() {
   return (
@@ -25,6 +26,13 @@ function App() {
             <Database />
           </PrivateComponent>
         }>
+        </Route>
+        <Route path="/editNews/:id" element={
+          <PrivateComponent>
+            <EditNews/>
+          </PrivateComponent>
+        }>
+
         </Route>
 
         <Route path="/signup" element={

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { addNewsdata, resetNewsStateData } from "../store/Slices/newsDataSlice";
 import { useEffect, useState } from "react";
 import  Modal from "../components/Modal";
+import { deleteNews } from "../api/deleteNewsData";
 
 
 const Database = () =>
@@ -48,6 +49,18 @@ const Database = () =>
         setOpenModal(true);
     }
 
+    const editNews = (id) =>
+    {
+        navigate(`/editNews/${id}`);
+    }
+
+    const DeleteNews = async (id) =>
+    {
+       let data = await deleteNews(id);
+       console.log('Deleted:::::::::',data);
+      window.location.reload();
+    }
+
     return (
         <div className="dataTableHolder">
             <button onClick={handleAddNews} className="submit_btn btn_right">AddNews</button>
@@ -76,9 +89,9 @@ const Database = () =>
                                             <TableCell>{n.newsBrief}</TableCell>
                                             <TableCell>
                                                 <button onClick={()=> openModal(id)} className="submit_btn">View</button>
-                                                <button onClick={()=> openModal(id)} className="submit_btn">Edit</button>
+                                                <button onClick={()=> editNews(n._id)} className="submit_btn">Edit</button>
 
-                                                <button onClick={()=> openModal(id)} className="submit_btn">Delete</button>
+                                                <button onClick={()=> DeleteNews(n._id)} className="submit_btn">Delete</button>
                                             </TableCell>
                                         </TableRow>
                                     )}

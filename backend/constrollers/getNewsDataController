@@ -11,5 +11,19 @@ module.exports.getNewsData = async(req,res)=>
     {
         return res.status(500).json({message:'Got Error While Fetching Data ',error:error});
     }
+}
 
+module.exports.findData = async(req,res)=>
+{
+    const id = req.params.id;
+    try 
+    {
+        let data = await news.findById({_id:id});
+        return res.status(200).json({message:'found Data',data});
+
+    }
+     catch (error)
+    {
+        return res.status(404).json({message:'Got Error While Finding Data',error:error});
+    }
 }

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { saveToDatabase } from "../api/saveToDatabase.api";
+import { useNavigate } from "react-router-dom";
 
 const AddNews = () => {
     const [pic, setPic] = useState('');
@@ -8,7 +9,7 @@ const AddNews = () => {
     const newsInBrief = useRef('');
     // const picToEncoded = useRef('');
 
-
+    const navigate = useNavigate();
    
 
     const convertImageToBase64 =  (e) => {
@@ -38,6 +39,11 @@ const AddNews = () => {
         let resp = await saveToDatabase(headLine.current.value, pic, subTitle.current.value, newsInBrief.current.value);
         console.log('resp::::::: ', resp);
         ShowStatus(false);
+
+        setTimeout(() =>
+        {
+            navigate('/database');            
+        }, 500);
     }
 
     const ShowStatus =(bool) =>
