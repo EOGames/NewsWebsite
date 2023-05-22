@@ -9,7 +9,7 @@ router.post('/register',register);
 router.post('/login',login);
 // export default getData;
 router.post('/saveToDatabase',saveToDatabase);
-router.get('/getData',getNewsData);
+router.get('/getData/:searchValue/:activePage',getNewsData);
 router.post('/editNews/:id',updateNews);
 router.post('/deleteNews/:id',deleteNews);
 router.get('/findNewsData/:id',findData);
