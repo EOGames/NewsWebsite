@@ -7,6 +7,7 @@ import MiniSlide from '../components/MiniSlide';
 import { addNewsdata, resetNewsStateData } from '../store/Slices/newsDataSlice';
 import Modal from '../components/Modal';
 import TablePagination from "@material-ui/core/TablePagination";
+import { logOut } from '../store/Slices/logoutSlice';
 
 
 function Home() {
@@ -23,12 +24,21 @@ function Home() {
 
     let [handleModal, setOpenModal] = useState(false);
     // let activeId = 0;
+    const activeJwt = localStorage.getItem('localSession');
 
 
     const FetchData = async () => {
         try {
-            let data = await getData(serchValue, activePage);
+            let data = await getData(serchValue, activePage,activeJwt);
             console.log('data received in Home ::::', data);
+
+            if (data?.response?.status === 401)
+            {
+                // means token expired
+                alert('Login Session Expired, Please Log In Again');
+                dispatch(logOut());
+                return;
+            }
             dispatch(resetStateData());
             dispatch(addHomePageData(data.data.data));
             // setNewsData(data.data);

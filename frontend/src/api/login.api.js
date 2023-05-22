@@ -16,7 +16,7 @@ export const login = async (email, password) => {
     }
 }
 
-export const adminLogin = (email,password)=>
+export const adminLogin = (email,password,activeJwt)=>
 {
     try 
     {
@@ -24,6 +24,9 @@ export const adminLogin = (email,password)=>
         {
             email:email,
             password: password
+        },
+        {
+            headers:{"Authorization":`Bearer ${activeJwt}`}
         }); 
         return response;
     } catch (error) {

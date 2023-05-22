@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { adminLogin, login } from "../api/login.api";
+import { logOut } from "../store/Slices/logoutSlice";
+import { useDispatch } from "react-redux";
 
 const AdminLogin = ({setAdminLogged}) => {
     // const navigation = useNavigate();
@@ -9,6 +11,9 @@ const AdminLogin = ({setAdminLogged}) => {
     const password = useRef('');
     const [loader, setLoader] = useState(false);
 
+    const activeJwt = localStorage.getItem('localSession');
+    const dispatch = useDispatch();
+
     const handleLogin = async () => {
         if (email.current.value.trim().length <= 0 || password.current.value.trim().length <= 0) {
             console.log('email password cant be empty');
@@ -16,10 +21,17 @@ const AdminLogin = ({setAdminLogged}) => {
         }
         setLoader(true);
         // console.log('email: ', email.current.value, 'password: ', password.current.value);
-        let data = await adminLogin(email.current.value, password.current.value);
+        let data = await adminLogin(email.current.value, password.current.value,activeJwt);
         console.log('Login Response:::::', data);
 
         const handleLoginError = document.getElementById('handleLoginError');
+        // if (data.response.status === 401)
+        // {
+        //     // means token expired
+        //     alert('Login Session Expired, Please Log In Again');
+        //     dispatch(logOut());
+        //     return;
+        // }
         if (data.status !== 200) 
         {
             handleLoginError.innerHTML = data.response.data.message;

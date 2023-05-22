@@ -48,7 +48,7 @@ function Registration() {
             {
                 setTimeout(() => 
                 {                
-                  navigate('/');
+                  navigate('/login');
                 }, 1500);
                 
                 validInvalid.innerHTML = 'Registration Success ! Please Login To Continue';

@@ -14,6 +14,7 @@ import Modal from "../components/Modal";
 import { deleteNews } from "../api/deleteNewsData";
 // import { adminLogin } from "../api/login.api";
 import AdminLogin from "./AdminLogin";
+import { logOut } from "../store/Slices/logoutSlice";
 
 
 
@@ -34,6 +35,8 @@ const Database = () => {
 
     const [adminLogged, setAdminLogged] = useState(false);
 
+    const activeJwt = localStorage.getItem('localSession');
+
     const closeModal = () => {
         setOpenModal(false);
     }
@@ -43,14 +46,26 @@ const Database = () => {
 
     const FetchtData = async () => {
         try {
-            let database = await getData(serchValue, activePage);
+            let database = await getData(serchValue, activePage, activeJwt);
+
             console.log('Complete Fetch::::', database);
+            
+            if (database?.response?.status === 401) 
+            {
+                // means token expired
+                alert('Login Session Expired, Please Log In Again');
+                dispatch(logOut());
+                return;
+            }
+            
             if (database?.data?.count) {
                 setMaxNewsCount(database.data.count);
             }
             setData(database.data.data);
         }
-        catch (error) {
+        catch (error)
+        {
+            
             console.log('Error While Fetching in Database:::::::', error);
         }
 
@@ -59,8 +74,7 @@ const Database = () => {
     useEffect(() => {
         FetchtData();
 
-        if (localStorage.getItem('access'))
-        {
+        if (localStorage.getItem('access')) {
             setAdminLogged(true);
         }
     }, [serchValue, activePage]);
@@ -159,7 +173,7 @@ const Database = () => {
                     </div>
                     :
                     <div>
-                        <AdminLogin setAdminLogged ={setAdminLogged}/>
+                        <AdminLogin setAdminLogged={setAdminLogged} />
                     </div>
 
             }
