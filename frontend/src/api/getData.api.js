@@ -1,9 +1,17 @@
 import Api from "./Api";
 
-export const getData = async ()=>
+export const getData = async (searchValue,activePage=0)=>
 {
+    let response;
     try {
-        let response = await Api().get('/getData');
+        if (searchValue !== undefined && searchValue.length >0 && searchValue.trim().length > 0)
+        {
+             response = await Api().get(`/getData/${searchValue}/${activePage}`);
+        }
+        else
+        {
+            response = await Api().get(`/getData/null/${activePage}`);
+        }
 
         return response;
         
