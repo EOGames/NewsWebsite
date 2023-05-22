@@ -7,6 +7,7 @@ reducers:{
     logOut(state,actions)
     {
         localStorage.removeItem('localSession');
+        localStorage.removeItem('access');
          window.location.href ='/login';
     },
 }
