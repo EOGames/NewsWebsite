@@ -1,6 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { saveToDatabase } from "../api/saveToDatabase.api";
 import { useNavigate } from "react-router-dom";
+// import {logOut} from '../store/Slices/logoutSlice';
+// import {useDispatch} from 'react-redux';
 
 const AddNews = () => {
     const [pic, setPic] = useState('');
@@ -10,71 +12,78 @@ const AddNews = () => {
     // const picToEncoded = useRef('');
 
     const navigate = useNavigate();
-   
 
-    const convertImageToBase64 =  (e) => {
+    const auth = localStorage.getItem('access');
+
+
+
+
+    const convertImageToBase64 = (e) => {
         console.log(e);
 
         let reader = new FileReader();
 
         try {
-            if (e!= null)
-            {
+            if (e != null) {
                 reader.readAsDataURL(e);
-                reader.onloadend = () => 
-                {
+                reader.onloadend = () => {
                     console.log(reader.result);
                     setPic(reader.result);
                 }
             }
         } catch (error) {
-            console.log('Error While Encoding Image Error:',error);
+            console.log('Error While Encoding Image Error:', error);
         }
 
     }
 
-    const sendToDatabase = async () => 
-    {
+    const sendToDatabase = async () => {
         ShowStatus(true);
         let resp = await saveToDatabase(headLine.current.value, pic, subTitle.current.value, newsInBrief.current.value);
         console.log('resp::::::: ', resp);
         ShowStatus(false);
 
-        setTimeout(() =>
-        {
-            navigate('/database');            
+        setTimeout(() => {
+            navigate('/database');
         }, 500);
     }
 
-    const ShowStatus =(bool) =>
-    {
+    const ShowStatus = (bool) => {
         const addNews_status = document.getElementById('addNews_status');
-        if (bool)
-        {
+        if (bool) {
             addNews_status.innerHTML = 'Saving...';
             addNews_status.style = 'color:red';
         }
-        else
-        {
+        else {
             addNews_status.innerHTML = 'Save Completed';
             addNews_status.style = 'color:green';
         }
     }
 
     return (
-        <div className="formHolder">
-            <div className="my_form">
-                <input ref={headLine} type="text" placeholder="Enter Headline" />
-                <div>
-                    <span>Upload Preview Pic</span>
-                    <input type="file" onChange={(e)=> convertImageToBase64(e.target.files[0])} />
-                </div>
-                <input ref={subTitle} type="text" placeholder="SubTitle" />
-                <input ref={newsInBrief} type="text" placeholder="News In Brief" />
-                <button className="submit_btn" onClick={sendToDatabase}>Save</button>
-                <p id="addNews_status"></p>
-            </div>
-        </div>
+        <>
+            {
+                auth ?
+                    <div className="formHolder">
+                        <div className="my_form">
+                            <input ref={headLine} type="text" placeholder="Enter Headline" />
+                            <div>
+                                <span>Upload Preview Pic</span>
+                                <input type="file" onChange={(e) => convertImageToBase64(e.target.files[0])} />
+                            </div>
+                            <input ref={subTitle} type="text" placeholder="SubTitle" />
+                            <input ref={newsInBrief} type="text" placeholder="News In Brief" />
+                            <button className="submit_btn" onClick={sendToDatabase}>Save</button>
+                            <p id="addNews_status"></p>
+                        </div>
+                    </div>
+                    : <h1 style={{color:'darkred',textAlign:'center'}}>Unauthorized access Refused</h1>
+            }
+
+
+        </>
+
     );
+
 }
 export default AddNews;
